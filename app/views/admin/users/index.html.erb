@@ -1,0 +1,41 @@
+<h2>Users</h2>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Status</th>
+        <th>Role</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= user.user_name %></td>
+          <td><%= user.email %></td>
+          <td><%= user.status.humanize %></td>
+          <td><%= user.role.humanize %></td>
+          <td>
+            <% if user.active? %>
+              <%= link_to "Inactivate", update_status_admin_user_path(user), class: "btn btn-danger" %>
+                 <% if user.user? %>
+                  <%= link_to "Promote", update_role_admin_user_path(user), class: "btn btn-success" %>
+                <% else %>
+                  <%= link_to "Depromote", update_role_admin_user_path(user), class: "btn btn-danger" %>
+                <% end %>
+              <% else %>
+                <%= link_to "Activate", update_status_admin_user_path(user), class: "btn btn-success" %>
+                <% if user.manager? %>
+                  <%= link_to "Depromote", update_role_admin_user_path(user), class: "btn btn-danger disabled" %>
+                <% else %>
+                  <%= link_to "Promote", update_role_admin_user_path(user), class: "btn btn-success disabled" %>
+                <% end %>
+              <% end %>
+            </td>
+          </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

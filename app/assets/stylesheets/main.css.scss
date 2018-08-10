@@ -1,33 +1,33 @@
 .clearfix::after {
-    content: "";
-    clear: both;
-    display: table;
+  content: "";
+  clear: both;
+  display: table;
 }
- .navbar {
+
+.navbar {
   min-height: 150px;
-  background-color: #0065bd;
   font-size: 16px;
   color: #FFFFFF;
 }
-.navbar-inverse{
-  background-color: dark-blue;
+
+.navbar-inverse {
   min-height: 100px;
   font-size: 16px;
-    color: #FFFFFF;
-   
+  color: #FFFFFF;
 }
- .navbar-right{
-    margin-top: 10px;
-    margin-right: 70px;
-   
+
+.navbar-right {
+  margin-top: 10px;
+  margin-right: 70px;
  }
- .navbar-brand{
-   padding-top: 40px; 
- }
+.navbar-brand {
+  padding-top: 40px;
+}
 
 header {
-    padding-top: 10px;
+  padding-top: 10px;
 }
+
 body {
-    font-size: 16px;
+  font-size: 16px;
 }
