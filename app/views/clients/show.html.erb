@@ -1,0 +1,22 @@
+<p>
+  <strong>First name:</strong>
+  <%= @client.first_name %>
+</p>
+
+<p>
+  <strong>Last name:</strong>
+  <%= @client.last_name %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @client.email %>
+</p>
+
+<p>
+  <strong>Location:</strong>
+  <%= @client.location %>
+</p>
+<%= link_to 'Edit', edit_client_path(@client) %> | <% unless current_user.user? %>
+<% end %>
+<%= link_to 'Back', clients_path %>

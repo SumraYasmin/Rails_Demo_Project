@@ -1,0 +1,36 @@
+<h1>Clients</h1>
+<div class="table-responsive clearfix">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Email</th>
+        <th>Location</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @clients.each do |client| %>
+        <tr>
+          <td><%= client.first_name %></td>
+          <td><%= client.last_name %></td>
+          <td><%= client.email %></td>
+          <td><%= client.location %></td>
+          <td><%= icon_class("Show", client_path(client)) %>
+            <% unless current_user.user? %>
+             <%= icon_class("Edit", edit_client_path(client)) %>
+            <% end %>
+            <% if current_user.admin? %>
+              <%= icon_class("Delete", client) %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<% unless current_user.user? %>
+  <%= link_to 'New Client', new_client_path, class: "clearfix" %>
+<% end %>
