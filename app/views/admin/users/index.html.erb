@@ -18,23 +18,12 @@
           <td><%= user.status.humanize %></td>
           <td><%= user.role.humanize %></td>
           <td>
-            <% if user.active? %>
-              <%= link_to "Inactivate", update_status_admin_user_path(user), class: "btn btn-danger" %>
-                 <% if user.user? %>
-                  <%= link_to "Promote", update_role_admin_user_path(user), class: "btn btn-success" %>
-                <% else %>
-                  <%= link_to "Depromote", update_role_admin_user_path(user), class: "btn btn-danger" %>
-                <% end %>
-              <% else %>
-                <%= link_to "Activate", update_status_admin_user_path(user), class: "btn btn-success" %>
-                <% if user.manager? %>
-                  <%= link_to "Depromote", update_role_admin_user_path(user), class: "btn btn-danger disabled" %>
-                <% else %>
-                  <%= link_to "Promote", update_role_admin_user_path(user), class: "btn btn-success disabled" %>
-                <% end %>
-              <% end %>
-            </td>
-          </tr>
+            <div>
+              <%= link_to user.get_toggled_status, update_status_admin_user_path(user), class: status_class(user.status) %>
+              <%= link_to user.get_toggled_role, update_role_admin_user_path(user), class: role_class(user) %>
+            </div>
+          </td>
+        </tr>
       <% end %>
     </tbody>
   </table>

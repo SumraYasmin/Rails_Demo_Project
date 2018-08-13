@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  scope :except_admins, -> { where(role: [:user, :manager]) }
+  scope :except_admins, -> { where.not(role: :admin) }
   validates :first_name, :last_name, presence: true
     
   devise :database_authenticatable, :registerable,
@@ -22,5 +22,13 @@ class User < ApplicationRecord
 
   def user_name
     [self.first_name.humanize, ' ', self.last_name.humanize].join
+  end
+
+  def get_toggled_status
+    self.active? ? "Inactivate" : "Activate"
+  end
+
+   def get_toggled_role
+    self.user? ? "Promote" : "Demote"
   end
 end
