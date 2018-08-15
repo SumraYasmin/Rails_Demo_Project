@@ -20,7 +20,7 @@
           <td><%= client.location %></td>
           <td>
             <%= link_to(client_path(client), class: "btn btn-info btn-md"){icon_of('glyphicon-eye-open')} %>
-            <%= link_to(client_path(client), class: "btn btn-info btn-md"){icon_of('glyphicon-edit')} unless current_user.user? %>
+            <%= link_to(edit_client_path(client), class: "btn btn-info btn-md"){icon_of('glyphicon-edit')} unless current_user.user? %>
             <%= link_to(client, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-md"){icon_of('glyphicon-trash')} if current_user.admin? %>
           </td>
         </tr>

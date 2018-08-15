@@ -1,0 +1,44 @@
+<%= form_with(model: @project, local: true) do |form| %>
+  <%= render 'layouts/errors', object: @project %>
+
+  <div class="form-group">
+    <%= form.label :title %>
+    <%= form.text_field :title, id: :project_title, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :description %>
+    <%= form.text_field :description, id: :project_description, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :cost %>
+    <%= form.number_field :cost, id: :project_cost, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :start_date %>
+    <%= form.date_field :start_date, id: :project_start_date, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :status %>
+    <%= form.select :status, options_for_select(Project.statuses.map { |key, value| [key.humanize, key] }) %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :client %>
+    <%= form.collection_select :client_id, @all_clients, :id, :name, include_blank: "Select client" %>
+  </div>
+
+  <%= fields_for(@project_user) do |u| %>
+    <div class="field">
+      <%= u.label "All Users" %><br/>
+      <%= collection_select(:users, :id, @all_users, :id, :user_name, {}, {:multiple => true, id: "select-book"}) %>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.submit, class: "btn btn-primary" %>
+  </div>
+<% end %>

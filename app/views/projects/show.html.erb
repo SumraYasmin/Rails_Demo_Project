@@ -1,0 +1,32 @@
+<p>
+  <strong>Name:</strong>
+  <%= @project.title %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @project.description %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @project.status %>
+</p>
+
+<p>
+  <strong>Start Date:</strong>
+  <%= @project.start_date %>
+</p>
+
+<p>
+  <strong>Cost:</strong>
+  <%= @project.cost %>
+</p>
+
+<p>
+  <strong>Client:</strong>
+  <%= @project.client.name %>
+</p>
+
+<%= link_to 'Edit |', edit_project_path(@project) unless current_user.user? %>
+<%= link_to 'Back', projects_path %>

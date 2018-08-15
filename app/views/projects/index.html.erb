@@ -1,0 +1,35 @@
+<h1>Projects</h1>
+<div class="table-responsive clearfix">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Status</th>
+        <th>Client</th>
+        <th>Start Date</th>
+        <th>Cost</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @projects.each do |project| %>
+        <tr>
+          <td><%= project.title %></td>
+          <td><%= project.description %></td>
+          <td><%= project.status %></td>
+          <td><%= project.client.name %></td>
+          <td><%= project.start_date %></td>
+          <td><%= project.cost %></td>
+          <td>
+            <%= link_to(project_path(project), class: "btn btn-info btn-md"){icon_of('glyphicon-eye-open')} %>
+            <%= link_to(edit_project_path(project), class: "btn btn-info btn-md"){icon_of('glyphicon-edit')} unless current_user.user? %>
+            <%= link_to(project, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-md"){icon_of('glyphicon-trash')} if current_user.admin? %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<%= link_to 'New Project', new_project_path   unless current_user.user? %>

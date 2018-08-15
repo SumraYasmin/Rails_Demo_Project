@@ -18,5 +18,32 @@
   <%= @client.location %>
 </p>
 
-<%= link_to 'Edit', edit_client_path(@client) unless current_user.user? %>
+<h1>Projects</h1>
+<div class="table-responsive clearfix">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Description</th>
+         <th>Start Date</th>
+        <th>Status</th>
+        <th>Cost</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @client.projects.each do |p| %>
+        <tr>
+          <td><%= p.title %></td>
+          <td><%= p.description %></td>
+          <td><%= p.start_date %></td>
+          <td><%= p.status %></td>
+          <td><%= p.cost %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<%= link_to 'Edit |', edit_client_path(@client) unless current_user.user? %>
 <%= link_to 'Back', clients_path %>
