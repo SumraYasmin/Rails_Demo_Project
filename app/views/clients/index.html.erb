@@ -18,19 +18,14 @@
           <td><%= client.last_name %></td>
           <td><%= client.email %></td>
           <td><%= client.location %></td>
-          <td><%= icon_class("Show", client_path(client)) %>
-            <% unless current_user.user? %>
-             <%= icon_class("Edit", edit_client_path(client)) %>
-            <% end %>
-            <% if current_user.admin? %>
-              <%= icon_class("Delete", client) %>
-            <% end %>
+          <td>
+            <%= link_to(client_path(client), class: "btn btn-info btn-md"){icon_of('glyphicon-eye-open')} %>
+            <%= link_to(client_path(client), class: "btn btn-info btn-md"){icon_of('glyphicon-edit')} unless current_user.user? %>
+            <%= link_to(client, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-md"){icon_of('glyphicon-trash')} if current_user.admin? %>
           </td>
         </tr>
       <% end %>
     </tbody>
   </table>
 </div>
-<% unless current_user.user? %>
-  <%= link_to 'New Client', new_client_path, class: "clearfix" %>
-<% end %>
+<%= link_to 'New Client', new_client_path, class: "clearfix" unless current_user.user? %>

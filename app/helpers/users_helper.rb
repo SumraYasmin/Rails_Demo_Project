@@ -6,17 +6,16 @@ module UsersHelper
     end
   end
 
+  def role_base_class(user)
+    {
+      'user'    => 'btn btn-success',
+      'manager' => 'btn btn-danger',
+    }[user.role]
+  end
+
   def role_class(user)
-    if user.active?
-      case user.role
-        when "user"    then "btn btn-success"
-        when "manager" then "btn btn-danger"
-      end
-    else
-      case user.role
-        when "user"    then "btn btn-success disabled"
-        when "manager" then "btn btn-danger disabled"
-      end
-    end
+    klasses = role_base_class(user)
+
+    user.active? ? klasses : (klasses << ' disabled')
   end
 end

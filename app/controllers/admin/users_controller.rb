@@ -1,5 +1,4 @@
 class Admin::UsersController < AdminController
-  before_action :set_user, only: [:update_status, :update_role]
   before_action :validates_role, only: [:update_status, :update_role, :destroy]
 
   def index

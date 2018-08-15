@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :projects
   resources :clients
   devise_for :users
   root "pages#home"
@@ -6,8 +7,8 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :users, only: [:destroy, :index, :edit, :update] do
       member do
-        get 'update_status'
-        get 'update_role'
+        patch 'update_status'
+        patch 'update_role'
       end
     end
   end

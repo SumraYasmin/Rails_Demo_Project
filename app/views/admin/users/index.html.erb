@@ -12,15 +12,15 @@
     </thead>
     <tbody>
       <% @users.each do |user| %>
-        <tr>
+        <tr>ss
           <td><%= user.user_name %></td>
           <td><%= user.email %></td>
           <td><%= user.status.humanize %></td>
           <td><%= user.role.humanize %></td>
           <td>
             <div>
-              <%= link_to user.get_toggled_status, update_status_admin_user_path(user), class: status_class(user.status) %>
-              <%= link_to user.get_toggled_role, update_role_admin_user_path(user), class: role_class(user) %>
+              <%= link_to user.get_toggled_status, update_status_admin_user_path(user), method: :patch, class: status_class(user.status) %>
+              <%= link_to user.get_toggled_role, update_role_admin_user_path(user), method: :patch, class: role_class(user) %>
             </div>
           </td>
         </tr>
