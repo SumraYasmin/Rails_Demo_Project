@@ -1,23 +1,34 @@
 class User < ApplicationRecord
+  scope :except_admins, -> { where.not(role: :admin) }
   validates :first_name, :last_name, presence: true
-  
+    
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
-         
+
   enum role: [:user, :admin, :manager]
   enum status: [:active, :inactive]
-  after_initialize :set_default_role, :set_default_status,  :if => :new_record?
 
-  def set_default_role
-    self.role ||= :user
+  def active_for_authentication?
+    super and self.active?
   end
 
-  def set_default_status
-    self.status ||= :active
+  def update_user_status
+    self.active? ? self.inactive! : self.active!
   end
 
-   before_create do
-    self.first_name = first_name.capitalize
-    self.last_name = last_name.capitalize
+  def update_user_role
+    self.manager? ? self.user! : self.manager!
+  end
+
+  def user_name
+    [self.first_name.humanize, ' ', self.last_name.humanize].join
+  end
+
+  def get_toggled_status
+    self.active? ? "Inactivate" : "Activate"
+  end
+
+   def get_toggled_role
+    self.user? ? "Promote" : "Demote"
   end
 end

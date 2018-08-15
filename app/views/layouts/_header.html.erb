@@ -1,0 +1,32 @@
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">PMS</a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li class="active"><a href="#">Home</a></li>
+      <% if user_signed_in? %>
+        <li><a href="#"> Projects </a></li>
+        <li><%= link_to "Users", admin_users_path if current_user.admin? %></li>
+        <li><%= link_to "Clients", clients_path %></li>
+        <li><%= link_to "Edit Profile", edit_user_registration_path %></li>
+        <li>
+          <%= link_to destroy_user_session_path, method: :delete do %>
+          <%= content_tag :span, "Logout", class: "glyphicon glyphicon-log-out" %>
+          <% end %>
+        </li>
+      <% else %>
+        <li>
+          <%= link_to new_user_registration_path do %>
+          <%= content_tag :span, "SignUp", class: "glyphicon glyphicon-user" %>
+          <% end %>
+        </li>
+        <li>
+          <%= link_to new_user_session_path do %>
+          <%= content_tag :span, "Login", class: "glyphicon glyphicon-log-in" %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</nav>
