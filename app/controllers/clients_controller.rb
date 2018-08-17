@@ -8,7 +8,6 @@ class ClientsController < ApplicationController
   end
 
   def show
-    @client_projects = @client.projects
   end
 
   def new

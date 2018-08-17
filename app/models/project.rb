@@ -1,6 +1,5 @@
 class Project < ApplicationRecord
-  validates :title, :client_id, presence: true
-  validates :title, uniqueness: true
+  validates :title, presence: true, uniqueness: true
 
   enum status: [:not_started, :in_progress, :on_hold, :compeleted]
 
@@ -9,4 +8,8 @@ class Project < ApplicationRecord
   has_many :assignments, dependent: :destroy
   has_many :users, through: :assignments
   has_many :payments, dependent: :destroy
+
+  def self.status_map
+   statuses.map { |key, value| [key.humanize, key] }
+  end
 end

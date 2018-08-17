@@ -3,42 +3,45 @@
 
   <div class="form-group">
     <%= form.label :title %>
-    <%= form.text_field :title, id: :project_title, class: "form-control" %>
+    <%= form.text_field :title, class: "form-control" %>
   </div>
 
   <div class="form-group">
     <%= form.label :description %>
-    <%= form.text_field :description, id: :project_description, class: "form-control" %>
+    <%= form.text_field :description, class: "form-control" %>
   </div>
 
   <div class="form-group">
     <%= form.label :cost %>
-    <%= form.number_field :cost, id: :project_cost, class: "form-control" %>
+    <%= form.number_field :cost, class: "form-control" %>
   </div>
 
   <div class="form-group">
     <%= form.label :start_date %>
-    <%= form.date_field :start_date, id: :project_start_date, class: "form-control" %>
+    <div class='input-group date' id='form_date'>
+      <%= form.text_field :start_date, class: "form-control" %>
+      <span class="input-group-addon">
+        <span class="glyphicon glyphicon-calendar"></span>
+      </span>
+    </div>
   </div>
 
   <div class="form-group">
     <%= form.label :status %>
-    <%= form.select :status, options_for_select(Project.statuses.map { |key, value| [key.humanize, key] }) %>
+    <%= form.select :status, options_for_select(Project.status_map) %>
   </div>
 
   <div class="form-group">
     <%= form.label :client %>
-    <%= form.collection_select :client_id, @all_clients, :id, :name, include_blank: "Select client" %>
+    <%= form.select :client_id, options_from_collection_for_select(Client.all, "id", "email"), include_blank: "Select client" %>
   </div>
 
-  <%= fields_for(@project_user) do |u| %>
-    <div class="field">
-      <%= u.label "All Users" %><br/>
-      <%= collection_select(:users, :id, @all_users, :id, :user_name, {}, {:multiple => true, id: "select-book"}) %>
-    </div>
-  <% end %>
+  <div class="form-group">
+    <%= form.label :Users %>
+    <%= form.collection_select(:user_ids, User.all, :id, :email, {}, {:multiple => true, id: "select2"}) %>
+  </div>
 
-  <div class="actions">
+  <div class="form-group">
     <%= form.submit %>
   </div>
 <% end %>

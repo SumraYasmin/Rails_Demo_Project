@@ -1,6 +1,6 @@
 <p>
   <strong>Name:</strong>
-  <%= @project.title %>
+  <%= @project.title.humanize %>
 </p>
 
 <p>
@@ -10,7 +10,7 @@
 
 <p>
   <strong>Status:</strong>
-  <%= @project.status %>
+  <%= @project.status.humanize %>
 </p>
 
 <p>
@@ -28,12 +28,12 @@
   <%= @project.client.name %>
 </p>
 
-<%= link_to 'Edit |', edit_project_path(@project) unless current_user.user? %>
-<%= link_to 'Back', projects_path %>
+<%= link_to 'Edit', edit_project_path(@project), class: "btn btn-primary" unless current_user.user? %>
+<%= link_to 'Back', projects_path, class: "btn btn-info" %>
 
 <% unless current_user.user? %>
   <h1>Payments</h1>
-  <div class="table-responsive clearfix">
+  <div class="table-responsive">
     <table class="table table-striped">
       <thead>
         <tr>

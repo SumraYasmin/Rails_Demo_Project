@@ -1,11 +1,11 @@
 <p>
   <strong>First name:</strong>
-  <%= @client.first_name %>
+  <%= @client.first_name.humanize %>
 </p>
 
 <p>
   <strong>Last name:</strong>
-  <%= @client.last_name %>
+  <%= @client.last_name.humanize %>
 </p>
 
 <p>
@@ -17,12 +17,11 @@
   <strong>Location:</strong>
   <%= @client.location %>
 </p>
-<%= link_to 'Edit |', edit_client_path(@client) unless current_user.user? %>
-<%= link_to 'Back', clients_path %>
-
+<%= link_to 'Edit', edit_client_path(@client), class: "btn btn-primary", unless current_user.user? %>
+<%= link_to 'Back', clients_path, class: "btn btn-info" %>
 
 <h1>Projects</h1>
-<div class="table-responsive clearfix">
+<div class="table-responsive">
   <table class="table table-striped">
     <thead>
       <tr>
@@ -35,13 +34,13 @@
     </thead>
 
     <tbody>
-      <% @client.projects.each do |p| %>
+      <% @client.projects.each do |project| %>
         <tr>
-          <td><%= p.title %></td>
-          <td><%= p.description %></td>
-          <td><%= p.start_date %></td>
-          <td><%= p.status %></td>
-          <td><%= p.cost %></td>
+          <td><%= project.title.humanize %></td>
+          <td><%= project.description %></td>
+          <td><%= project.start_date %></td>
+          <td><%= project.status.humanize %></td>
+          <td><%= project.cost %></td>
         </tr>
       <% end %>
     </tbody>

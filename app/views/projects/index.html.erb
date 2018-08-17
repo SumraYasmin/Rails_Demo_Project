@@ -1,5 +1,5 @@
 <h1>Projects</h1>
-<div class="table-responsive clearfix">
+<div class="table-responsive">
   <table class="table table-striped">
     <thead>
       <tr>
@@ -16,9 +16,9 @@
     <tbody>
       <% @projects.each do |project| %>
         <tr>
-          <td><%= project.title %></td>
+          <td><%= project.title.humanize %></td>
           <td><%= project.description %></td>
-          <td><%= project.status %></td>
+          <td><%= project.status.humanize %></td>
           <td><%= project.client.name %></td>
           <td><%= project.start_date %></td>
           <td><%= project.cost %></td>
@@ -35,4 +35,4 @@
   </table>
 </div>
 
-<%= link_to 'New Project', new_project_path   unless current_user.user? %>
+<%= link_to 'New Project', new_project_path, class: "btn btn-primary" unless current_user.user? %>

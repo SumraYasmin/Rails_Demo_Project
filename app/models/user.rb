@@ -24,7 +24,7 @@ class User < ApplicationRecord
   end
 
   def user_name
-    [self.first_name.humanize, ' ', self.last_name.humanize].join
+    [self.first_name, ' ', self.last_name].join.humanize
   end
 
   def get_toggled_status

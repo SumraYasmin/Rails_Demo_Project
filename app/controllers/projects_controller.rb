@@ -4,7 +4,7 @@ class ProjectsController < ApplicationController
   before_action :validates_admin, only: :destroy
 
   def index
-    @projects = Project.all
+    @projects = Project.order(created_at: :desc).includes(:client)
   end
 
   def show
@@ -12,22 +12,13 @@ class ProjectsController < ApplicationController
 
   def new
     @project = Project.new
-    get_clients
-    get_users
   end
 
   def edit
-    get_clients
-    get_users
   end
 
   def create
     @project = Project.new(project_params)
-    params[:users][:id].each do |user|
-      if !user.empty?
-        @project.assignments.build(user_id: user)
-      end
-    end
 
     if @project.save
       redirect_to @project, notice: 'Project was successfully created.'
@@ -56,7 +47,7 @@ class ProjectsController < ApplicationController
     end
 
     def project_params
-      params.require(:project).permit(:title, :description, :status, :client_id, :start_date, :cost)
+      params.require(:project).permit(:title, :description, :status, :client_id, :start_date, :cost, user_ids: [])
     end
 
     def validates_role
@@ -66,14 +57,4 @@ class ProjectsController < ApplicationController
     def validates_admin
       redirect_to(clients_path, notice: 'You can not perform this action.') unless current_user.admin?
     end
-
-    def get_clients
-      @all_clients = Client.all
-    end
-
-    def get_users
-      @all_users = User.all
-      @project_user = @project.assignments.build
-    end
-
 end
