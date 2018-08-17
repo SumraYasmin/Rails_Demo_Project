@@ -3,7 +3,7 @@ class Client < ApplicationRecord
   validates :email, presence: true, uniqueness: true
   validates_format_of :email, with: Devise::email_regexp
 
-  has_many :projects
+  has_many :projects, dependent: :destroy
 
   def name
      [self.first_name.humanize, ' ', self.last_name.humanize].join

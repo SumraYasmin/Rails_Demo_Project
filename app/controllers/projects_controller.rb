@@ -46,7 +46,7 @@ class ProjectsController < ApplicationController
 
   def destroy
     @project.destroy
-    redirect_to projects_url, notice: 'Project was successfully destroyed.'
+    redirect_to projects_path, notice: 'Project was successfully destroyed.'
   end
 
   private
@@ -59,7 +59,7 @@ class ProjectsController < ApplicationController
       params.require(:project).permit(:title, :description, :status, :client_id, :start_date, :cost)
     end
 
-     def validates_role
+    def validates_role
       redirect_to(clients_path, notice: 'You can not perform this action.') if current_user.user?
     end
 

@@ -17,6 +17,9 @@
   <strong>Location:</strong>
   <%= @client.location %>
 </p>
+<%= link_to 'Edit |', edit_client_path(@client) unless current_user.user? %>
+<%= link_to 'Back', clients_path %>
+
 
 <h1>Projects</h1>
 <div class="table-responsive clearfix">
@@ -44,6 +47,3 @@
     </tbody>
   </table>
 </div>
-
-<%= link_to 'Edit |', edit_client_path(@client) unless current_user.user? %>
-<%= link_to 'Back', clients_path %>

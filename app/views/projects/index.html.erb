@@ -9,6 +9,7 @@
         <th>Client</th>
         <th>Start Date</th>
         <th>Cost</th>
+        <th>Action</th>
       </tr>
     </thead>
 
@@ -25,6 +26,8 @@
             <%= link_to(project_path(project), class: "btn btn-info btn-md"){icon_of('glyphicon-eye-open')} %>
             <%= link_to(edit_project_path(project), class: "btn btn-info btn-md"){icon_of('glyphicon-edit')} unless current_user.user? %>
             <%= link_to(project, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-md"){icon_of('glyphicon-trash')} if current_user.admin? %>
+            <%= link_to "Add Payment", new_project_payment_path(project), remote: true, class: "btn btn-primary" if current_user.manager? %>
+             <%= render 'dialog' %>
           </td>
         </tr>
       <% end %>

@@ -1,8 +1,8 @@
 class CreateAssignments < ActiveRecord::Migration[5.1]
   def change
     create_table :assignments do |t|
-      t.integer :user_id
-      t.integer :project_id
+      t.references :user, index: true
+      t.references :project, index: true
 
       t.timestamps
     end

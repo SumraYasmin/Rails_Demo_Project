@@ -8,7 +8,7 @@ class User < ApplicationRecord
   enum role: [:user, :admin, :manager]
   enum status: [:active, :inactive]
 
-  has_many :assignments
+  has_many :assignments, dependent: :destroy
   has_many :projects, through: :assignments
 
   def active_for_authentication?
