@@ -1,0 +1,22 @@
+<p>
+  <strong>Hours:</strong>
+  <%= @time_log.hours %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @time_log.date %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @time_log.user %>
+</p>
+
+<p>
+  <strong>Project:</strong>
+  <%= @time_log.project %>
+</p>
+
+<%= link_to 'Edit', edit_time_log_path(@time_log) %> |
+<%= link_to 'Back', time_logs_path %>

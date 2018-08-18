@@ -10,6 +10,7 @@ class User < ApplicationRecord
 
   has_many :assignments, dependent: :destroy
   has_many :projects, through: :assignments
+  has_many :time_logs, dependent: :destroy
 
   def active_for_authentication?
     super and self.active?

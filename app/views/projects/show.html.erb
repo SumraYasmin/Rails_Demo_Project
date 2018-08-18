@@ -29,7 +29,7 @@
     </tr>
     <tr>
       <td><strong>Client:</strong></td>
-      <td><%= @project.client.name%></td>
+      <td><%= @project.client.name %></td>
     </tr>
   </tbody>
 </table>
@@ -38,30 +38,10 @@
 <%= link_to 'Back', projects_path, class: "btn btn-info btn-md" %>
 
 <% unless current_user.user? %>
-  <h1>Payments</h1>
-  <div class="table-responsive">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Amount</th>
-          <th>Date</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <% @project.payments.each do |payment| %>
-          <tr>
-            <td><%= payment.amount %></td>
-            <td><%= payment.date %></td>
-            <td>
-              <%= link_to(edit_project_payment_path(@project, payment), remote: true, class: "btn btn-info btn-md"){icon_of('glyphicon-edit')} if current_user.manager? %>
-              <%= render 'dialog' %>
-              <%= link_to(project_payment_path(@project, payment), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-md"){icon_of('glyphicon-trash')} if current_user.admin? %>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
+  <%= render 'payments/payments', payments: @project.payments.latest %>
+  <%= link_to 'View All', all_payments_project_path, class: "btn btn-info btn-md" %>
+<% end %>
+<% if current_user.user? %>
+  <%= render 'time_logs/timelogs', timelogs: @project.time_logs.latest %>
+  <%= link_to 'View All', all_time_logs_project_path, class: "btn btn-info btn-md" %>
 <% end %>

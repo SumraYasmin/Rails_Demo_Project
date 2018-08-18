@@ -1,10 +1,14 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :edit, :update, :destroy]
+  before_action :set_project, only: [:show, :edit, :update, :destroy, :all_payments, :all_time_logs]
   before_action :validates_role, only: [:new, :edit, :update, :create]
   before_action :validates_admin, only: :destroy
 
   def index
-    @projects = Project.order(created_at: :desc).includes(:client)
+    if current_user.user?
+      @projects = current_user.projects.includes(:client)
+    else
+      @projects = Project.order_desc.includes(:client)
+    end
   end
 
   def show
@@ -38,6 +42,12 @@ class ProjectsController < ApplicationController
   def destroy
     @project.destroy
     redirect_to projects_path, notice: 'Project was successfully destroyed.'
+  end
+
+  def all_payments
+  end
+
+  def all_time_logs
   end
 
   private
