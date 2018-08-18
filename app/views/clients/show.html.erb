@@ -1,24 +1,33 @@
-<p>
-  <strong>First name:</strong>
-  <%= @client.first_name.humanize %>
-</p>
+<h1><%= Client %></h1>
+<table class="table">
+  <thead>
+    <tr>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>First name:</strong></td>
+      <td><%= @client.first_name.humanize %></td>
+    </tr>
+    <tr>
+      <td><strong>Last name:</strong></td>
+      <td><%= @client.last_name.humanize %></td>
+    </tr>
+    <tr>
+      <td><strong>Email:</strong></td>
+      <td><%= @client.email %></td>
+    </tr>
+    <tr>
+      <td><strong>Address:</strong></td>
+      <td><%= @client.location %></td>
+    </tr>
+  </tbody>
+</table>
 
-<p>
-  <strong>Last name:</strong>
-  <%= @client.last_name.humanize %>
-</p>
-
-<p>
-  <strong>Email:</strong>
-  <%= @client.email %>
-</p>
-
-<p>
-  <strong>Location:</strong>
-  <%= @client.location %>
-</p>
-<%= link_to 'Edit', edit_client_path(@client), class: "btn btn-primary", unless current_user.user? %>
-<%= link_to 'Back', clients_path, class: "btn btn-info" %>
+<%= link_to 'Edit', edit_client_path(@client), class: "btn btn-primary btn-md" unless current_user.user? %>
+<%= link_to 'Back', clients_path, class: "btn btn-info btn-md" %>
 
 <h1>Projects</h1>
 <div class="table-responsive">

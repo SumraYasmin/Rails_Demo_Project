@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   root "pages#home"
 
   resources :projects do
-    resources :payments, except: [:index, :show]
+  resources :payments, except: [:index, :show]
   end
 
   namespace :admin do

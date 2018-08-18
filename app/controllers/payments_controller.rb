@@ -4,29 +4,28 @@ class PaymentsController < ApplicationController
   before_action :validates_admin, only: :destroy
 
   def new
-    set_project
-    @payment = @project.payments.build
-  end
-
-  def edit
-    set_project
-    @payment = @project.payments.find(params[:id])
+    find_project
+    @payment = Payment.new
   end
 
   def create
-    set_project
-    @payment = @project.payments.build(payment_params)
+    @payment = Payment.new(payment_params)
+    @payment.project_id = params[:project_id]
 
     if @payment.save
       redirect_to projects_path, notice: 'Payment was successfully created.'
     else
+      find_project
       render :new
     end
   end
 
+  def edit
+    find_project
+  end
+
   def update
-    set_project
-    @payment = @project.payments.find(params[:id])
+    find_project
     if @payment.update(payment_params)
       redirect_to @project, notice: 'Payment was successfully updated.'
     else
@@ -35,8 +34,7 @@ class PaymentsController < ApplicationController
   end
 
   def destroy
-    set_project
-    @payment = @project.payments.find(params[:id])
+    find_project
     @payment.destroy
     redirect_to @project, notice: 'Payment was successfully destroyed.'
   end
@@ -59,7 +57,7 @@ class PaymentsController < ApplicationController
       redirect_to(clients_path, notice: 'You can not perform this action.') unless current_user.admin?
     end
 
-    def set_project
+    def find_project
       @project = Project.find(params[:project_id])
     end
 end
