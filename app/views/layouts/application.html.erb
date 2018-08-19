@@ -11,7 +11,9 @@
   </header>
   <body>
     <div class="container">
-      <%= render 'layouts/alerts' %>
+      <div class='flash-messages'>
+        <%= render 'layouts/alerts' %>
+      </div>
       <%= yield %>
     </div>
   </body>

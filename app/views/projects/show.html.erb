@@ -37,11 +37,11 @@
 <%= link_to 'Edit', edit_project_path(@project), class: "btn btn-primary btn-md" unless current_user.user? %>
 <%= link_to 'Back', projects_path, class: "btn btn-info btn-md" %>
 
-<% unless current_user.user? %>
-  <%= render 'payments/payments', payments: @project.payments.latest %>
-  <%= link_to 'View All', all_payments_project_path, class: "btn btn-info btn-md" %>
-<% end %>
 <% if current_user.user? %>
-  <%= render 'time_logs/timelogs', timelogs: @project.time_logs.latest %>
-  <%= link_to 'View All', all_time_logs_project_path, class: "btn btn-info btn-md" %>
+  <%= render 'time_logs/timelogs', timelogs: @project.time_logs.order_desc.first(5) %>
+  <%= link_to 'View All', project_time_logs_path(@project), class: "btn btn-info btn-md" %>
+<% else %>
+  <%= render 'payments/payments', payments: @project.payments.order_desc.first(5) %>
+  <%= link_to 'View All', project_payments_path(@project), class: "btn btn-info btn-md" %>
 <% end %>
+<%= render 'layouts/modal' %>

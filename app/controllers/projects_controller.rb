@@ -5,7 +5,7 @@ class ProjectsController < ApplicationController
 
   def index
     if current_user.user?
-      @projects = current_user.projects.includes(:client)
+      @projects = current_user.projects.order_desc.includes(:client)
     else
       @projects = Project.order_desc.includes(:client)
     end
@@ -42,12 +42,6 @@ class ProjectsController < ApplicationController
   def destroy
     @project.destroy
     redirect_to projects_path, notice: 'Project was successfully destroyed.'
-  end
-
-  def all_payments
-  end
-
-  def all_time_logs
   end
 
   private

@@ -2,41 +2,39 @@ class PaymentsController < ApplicationController
   before_action :set_payment, only: [:edit, :update, :destroy]
   before_action :validates_role, only: [:new, :edit, :update, :create]
   before_action :validates_admin, only: :destroy
+  before_action :set_project, only: [:create, :new, :edit, :index]
+
+  def index
+    @payments = @project.payments.order_desc
+  end
 
   def new
-    find_project
     @payment = Payment.new
   end
 
   def create
-    @payment = Payment.new(payment_params)
-    @payment.project_id = params[:project_id]
-
+    @payment = @project.payments.new(payment_params)
     if @payment.save
-      redirect_to projects_path, notice: 'Payment was successfully created.'
+      flash.now[:notice] = 'Payment was successfully created.'
     else
-      find_project
       render :new
     end
   end
 
   def edit
-    find_project
   end
 
   def update
-    find_project
     if @payment.update(payment_params)
-      redirect_to @project, notice: 'Payment was successfully updated.'
+      flash.now[:notice] = 'Payment was successfully updated.'
     else
       render :edit
     end
   end
 
   def destroy
-    find_project
     @payment.destroy
-    redirect_to @project, notice: 'Payment was successfully destroyed.'
+    redirect_to :back, notice: 'Payment was successfully destroyed.'
   end
 
   private
@@ -57,7 +55,7 @@ class PaymentsController < ApplicationController
       redirect_to(clients_path, notice: 'You can not perform this action.') unless current_user.admin?
     end
 
-    def find_project
+    def set_project
       @project = Project.find(params[:project_id])
     end
 end

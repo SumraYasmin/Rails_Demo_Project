@@ -4,12 +4,8 @@ Rails.application.routes.draw do
   root "pages#home"
 
   resources :projects do
-    member do
-     get 'all_payments'
-     get 'all_time_logs'
-    end
-    resources :payments, except: [:index, :show]
-    resources :time_logs, except: [:index, :show]
+    resources :payments, except: [:show]
+    resources :time_logs, except: [:show]
   end
 
   namespace :admin do
