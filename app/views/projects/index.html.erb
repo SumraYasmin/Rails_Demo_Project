@@ -23,10 +23,9 @@
           <td><%= project.start_date %></td>
           <td><%= project.cost %></td>
           <td>
-            <div data-turbolinks="false">
             <%= link_to(project_path(project), class: "btn btn-info btn-md"){icon_of('glyphicon-eye-open')} %>
             <%= link_to "Add Timelog", new_project_time_log_path(project), remote: true, class: "btn btn-primary" if current_user.user? %>
-            <%= link_to(edit_project_path(project), class: "btn btn-info btn-md"){icon_of('glyphicon-edit')} unless current_user.user? %>
+            <%= link_to(edit_project_path(project), class: "btn btn-info btn-md", data: { no_turbolinks: true }){icon_of('glyphicon-edit')} unless current_user.user? %>
             <%= link_to(project, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-md"){icon_of('glyphicon-trash')} if current_user.admin? %>
             <%= link_to "Add Payment", new_project_payment_path(project), remote: true, class: "btn btn-primary" if current_user.manager? %>
           </td>
@@ -36,5 +35,5 @@
   </table>
 </div>
 
-<%= link_to('New Project', new_project_path, class: "btn btn-primary") unless current_user.user? %>
+<%= link_to('New Project', new_project_path, data: { no_turbolinks: true }, class: "btn btn-primary") unless current_user.user? %>
 <%= render 'layouts/modal' %>
