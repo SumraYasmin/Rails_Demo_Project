@@ -1,6 +1,6 @@
 class PaymentsController < ApplicationController
   before_action :set_payment, only: [:edit, :update, :destroy]
-  before_action :validates_role, only: [:new, :edit, :update, :create]
+  before_action :validate_first, only: [:new, :edit, :update, :create]
   before_action :validates_admin, only: :destroy
   before_action :set_project, only: [:create, :new, :edit, :index]
 
@@ -47,7 +47,7 @@ class PaymentsController < ApplicationController
       params.require(:payment).permit(:amount, :date)
     end
 
-    def validates_role
+    def validate_first
       redirect_to(clients_path, notice: 'You can not perform this action.') if current_user.user?
     end
 

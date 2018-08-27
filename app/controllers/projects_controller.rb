@@ -1,6 +1,6 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :edit, :update, :destroy, :all_payments, :all_time_logs]
-  before_action :validates_role, only: [:new, :edit, :update, :create]
+  before_action :set_project, only: [:show, :edit, :update, :destroy]
+  before_action :validate_first, only: [:new, :edit, :update, :create]
   before_action :validates_admin, only: :destroy
 
   def index
@@ -54,7 +54,7 @@ class ProjectsController < ApplicationController
       params.require(:project).permit(:title, :description, :status, :client_id, :start_date, :cost, user_ids: [])
     end
 
-    def validates_role
+    def validate_first
       redirect_to(clients_path, notice: 'You can not perform this action.') if current_user.user?
     end
 
