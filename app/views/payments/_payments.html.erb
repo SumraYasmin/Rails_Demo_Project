@@ -8,9 +8,9 @@
           <th>Action</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody id="payment_items_table_tbody">
         <% payments.each do |payment| %>
-          <tr>
+          <tr id="payment-<%= payment.id %>">
             <td><%= payment.amount %></td>
             <td><%= payment.date %></td>
             <td>
@@ -22,3 +22,4 @@
       </tbody>
     </table>
   </div>
+<%= render 'layouts/modal' %>

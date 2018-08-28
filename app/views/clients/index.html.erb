@@ -3,8 +3,7 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th>First name</th>
-        <th>Last name</th>
+        <th>Name</th>
         <th>Email</th>
         <th>Location</th>
         <th>Action</th>
@@ -14,8 +13,7 @@
     <tbody>
       <% @clients.each do |client| %>
         <tr>
-          <td><%= client.first_name.humanize %></td>
-          <td><%= client.last_name.humanize %></td>
+          <td><%= client.name %></td>
           <td><%= client.email %></td>
           <td><%= client.location %></td>
           <td>

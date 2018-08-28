@@ -6,6 +6,6 @@ class Client < ApplicationRecord
   has_many :projects, dependent: :destroy
 
   def name
-     [self.first_name, ' ', self.last_name].join.humanize
+    [self.first_name, ' ', self.last_name].join.humanize
   end
 end

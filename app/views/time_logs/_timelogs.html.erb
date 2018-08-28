@@ -8,9 +8,9 @@
           <th>Action</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody id="timelog_items_table_tbody">
         <% timelogs.each do |timelog| %>
-          <tr>
+          <tr id="timelog-<%= timelog.id %>">
             <td><%= timelog.date %></td>
             <td><%= timelog.hours %></td>
             <td>
@@ -22,3 +22,4 @@
       </tbody>
     </table>
   </div>
+<%= render 'layouts/modal' %>

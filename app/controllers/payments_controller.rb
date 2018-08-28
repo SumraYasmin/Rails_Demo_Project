@@ -1,8 +1,8 @@
 class PaymentsController < ApplicationController
-  before_action :set_payment, only: [:edit, :update, :destroy]
-  before_action :validate_first, only: [:new, :edit, :update, :create]
-  before_action :validates_admin, only: :destroy
+  before_action :validate_role, only: [:new, :edit, :update, :create]
   before_action :set_project, only: [:create, :new, :edit, :index]
+  before_action :validates_admin, only: :destroy
+  before_action :set_payment, only: [:edit, :update, :destroy]
 
   def index
     @payments = @project.payments.order_desc
@@ -47,7 +47,7 @@ class PaymentsController < ApplicationController
       params.require(:payment).permit(:amount, :date)
     end
 
-    def validate_first
+    def validate_role
       redirect_to(clients_path, notice: 'You can not perform this action.') if current_user.user?
     end
 

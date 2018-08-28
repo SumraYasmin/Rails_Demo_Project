@@ -1,2 +1,3 @@
+$("#timelog-<%= @timelog.id %>").replaceWith("<%= j render 'time_logs/table_row', timelog: @timelog %>");
 $('#dialog').modal('toggle');
 $(".flash-messages").html("<%= j render('layouts/alerts') %>");
