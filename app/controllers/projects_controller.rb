@@ -16,9 +16,11 @@ class ProjectsController < ApplicationController
 
   def new
     @project = Project.new
+    @project.attachments.build
   end
 
   def edit
+    @attachments = @project.attachments
   end
 
   def create
@@ -51,7 +53,7 @@ class ProjectsController < ApplicationController
     end
 
     def project_params
-      params.require(:project).permit(:title, :description, :status, :client_id, :start_date, :cost, user_ids: [], attachments_attributes: [:file, :id, :_destory])
+      params.require(:project).permit(:title, :description, :status, :client_id, :start_date, :cost, user_ids: [], attachments_attributes: [:file, :id, :_destroy])
     end
 
     def validate_role

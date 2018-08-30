@@ -9,6 +9,9 @@ class Project < ApplicationRecord
   has_many :users, through: :assignments
   has_many :payments, dependent: :destroy
   has_many :time_logs, dependent: :destroy
+  has_many :attachments, as: :attachable, dependent: :destroy
+
+  accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
 
   def self.status_map
     statuses.map {|key, value| [key.humanize, key]}

@@ -41,11 +41,11 @@
     <%= form.collection_select(:user_ids, User.all, :id, :email, {}, {multiple: true, class: "form-control select2"}) %>
   </div>
 
-  <h2>Add Attachments</h2>
+  <h2>Attachments</h2>
   <div class="form-group">
+    <%= link_to_add_association 'Add file', form, :attachments %>
     <%= form.fields_for :attachments do |attachment| %>
-      <%= render 'attachment_fields', f: attachment %>
-      <%= link_to_add_association 'Add file', form, :attachments %>
+        <%= render 'attachments/attachment_fields', f: attachment %>
     <% end %>
   </div>
 

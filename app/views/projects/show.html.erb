@@ -31,6 +31,10 @@
 <%= link_to 'Edit', edit_project_path(@project), class: "btn btn-primary btn-md" unless current_user.user? %>
 <%= link_to 'Back', projects_path, class: "btn btn-info btn-md" %>
 
+<% if @project.attachments.any? %>
+  <%= render 'attachments/attachments', attachments: @project.attachments %>
+<% end %>
+
 <% if current_user.user? %>
   <%= render 'time_logs/timelogs', timelogs: @project.time_logs.order_desc.first(5) %>
   <%= link_to 'View All', project_time_logs_path(@project), class: "btn btn-info btn-md" %>

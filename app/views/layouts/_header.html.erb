@@ -1,10 +1,10 @@
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">PMS</a>
+      <%= link_to "PMS", root_path, class: "navbar-brand" %>
     </div>
     <ul class="nav navbar-nav navbar-right">
-      <li class="active"><a href="#">Home</a></li>
+      <li class="active"><%= link_to "Home", root_path %></li></li>
       <% if user_signed_in? %>
         <li><%= link_to "Projects", projects_path %></li>
         <li><%= link_to "Users", admin_users_path if current_user.admin? %></li>
@@ -14,6 +14,9 @@
           <%= link_to destroy_user_session_path, method: :delete do %>
           <%= content_tag :span, "Logout", class: "glyphicon glyphicon-log-out" %>
           <% end %>
+        </li>
+        <li>
+          <%= image_tag (current_user.attachment.file.url(:thumb)), class: "img-circle" if current_user.attachment %>
         </li>
       <% else %>
         <li>
