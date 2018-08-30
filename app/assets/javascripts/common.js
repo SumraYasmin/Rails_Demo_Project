@@ -1,4 +1,4 @@
-$(document).on("click",".datepicker", function(){
+$(document).ready(function(){
   $(".datepicker").datetimepicker({
     format: 'DD/MM/YYYY'
   });

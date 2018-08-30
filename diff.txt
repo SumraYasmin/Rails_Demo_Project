@@ -1,0 +1,230 @@
+diff --git a/Gemfile b/Gemfile
+index 5b50006..52d1677 100644
+--- a/Gemfile
++++ b/Gemfile
+@@ -36,3 +36,5 @@ gem 'jquery-rails'
+ gem 'select2-rails'
+ gem 'momentjs-rails'
+ gem 'bootstrap3-datetimepicker-rails'
++gem 'paperclip'
++gem 'cocoon'
+diff --git a/Gemfile.lock b/Gemfile.lock
+index 0c6bb71..c4fd015 100644
+--- a/Gemfile.lock
++++ b/Gemfile.lock
+@@ -61,6 +61,8 @@ GEM
+       xpath (>= 2.0, < 4.0)
+     childprocess (0.9.0)
+       ffi (~> 1.0, >= 1.0.11)
++    climate_control (0.2.0)
++    cocoon (1.2.11)
+     coffee-rails (4.2.2)
+       coffee-script (>= 2.2.0)
+       railties (>= 4.0.0)
+@@ -100,6 +102,10 @@ GEM
+     mail (2.7.0)
+       mini_mime (>= 0.1.1)
+     method_source (0.9.0)
++    mime-types (3.2.2)
++      mime-types-data (~> 3.2015)
++    mime-types-data (3.2018.0812)
++    mimemagic (0.3.2)
+     mini_mime (1.0.0)
+     mini_portile2 (2.3.0)
+     minitest (5.11.3)
+@@ -111,6 +117,12 @@ GEM
+     nokogiri (1.8.4)
+       mini_portile2 (~> 2.3.0)
+     orm_adapter (0.5.0)
++    paperclip (6.1.0)
++      activemodel (>= 4.2.0)
++      activesupport (>= 4.2.0)
++      mime-types
++      mimemagic (~> 0.3.0)
++      terrapin (~> 0.6.0)
+     public_suffix (3.0.2)
+     puma (3.12.0)
+     rack (2.0.5)
+@@ -176,6 +188,8 @@ GEM
+       actionpack (>= 4.0)
+       activesupport (>= 4.0)
+       sprockets (>= 3.0.0)
++    terrapin (0.6.0)
++      climate_control (>= 0.0.3, < 1.0)
+     thor (0.20.0)
+     thread_safe (0.3.6)
+     tilt (2.0.8)
+@@ -208,6 +222,7 @@ DEPENDENCIES
+   bootstrap3-datetimepicker-rails
+   byebug
+   capybara (~> 2.13)
++  cocoon
+   coffee-rails (~> 4.2)
+   devise
+   jbuilder (~> 2.5)
+@@ -215,6 +230,7 @@ DEPENDENCIES
+   listen (>= 3.0.5, < 3.2)
+   momentjs-rails
+   mysql2 (>= 0.3.18, < 0.6.0)
++  paperclip
+   puma (~> 3.7)
+   rails (~> 5.1.6)
+   sass-rails (~> 5.0)
+diff --git a/app/assets/javascripts/application.js b/app/assets/javascripts/application.js
+index df1afb9..9d9e3ad 100644
+--- a/app/assets/javascripts/application.js
++++ b/app/assets/javascripts/application.js
+@@ -5,4 +5,5 @@
+ //= require select2
+ //= require moment
+ //= require bootstrap-datetimepicker
++//= require cocoon
+ //= require_tree .
+diff --git a/app/controllers/application_controller.rb b/app/controllers/application_controller.rb
+index a636704..d79630e 100644
+--- a/app/controllers/application_controller.rb
++++ b/app/controllers/application_controller.rb
+@@ -9,6 +9,6 @@ class ApplicationController < ActionController::Base
+    def configure_permitted_parameters
+      devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :email, :date_of_birth, :password, :remember_me])
+      devise_parameter_sanitizer.permit(:sign_in, keys: [:email, :password, :remember_me])
+-     devise_parameter_sanitizer.permit(:account_update, keys: [:first_name, :last_name, :email, :date_of_birth, :password, :remember_me])
++     devise_parameter_sanitizer.permit(:account_update, keys: [:first_name, :last_name, :email, :date_of_birth, :password, :remember_me, attachment_attributes: [:file_]])
+    end
+ end
+diff --git a/app/controllers/projects_controller.rb b/app/controllers/projects_controller.rb
+index 7a88b27..3ef306c 100644
+--- a/app/controllers/projects_controller.rb
++++ b/app/controllers/projects_controller.rb
+@@ -16,9 +16,11 @@ class ProjectsController < ApplicationController
+ 
+   def new
+     @project = Project.new
++    @project.attachments.build
+   end
+ 
+   def edit
++    @project.attachments.build
+   end
+ 
+   def create
+diff --git a/app/models/project.rb b/app/models/project.rb
+index c3e481a..525cbb3 100644
+--- a/app/models/project.rb
++++ b/app/models/project.rb
+@@ -9,6 +9,9 @@ class Project < ApplicationRecord
+   has_many :users, through: :assignments
+   has_many :payments, dependent: :destroy
+   has_many :time_logs, dependent: :destroy
++  has_many :attachments, as: :attachable, dependent: :destroy
++
++  accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
+ 
+   def self.status_map
+     statuses.map {|key, value| [key.humanize, key]}
+diff --git a/app/models/user.rb b/app/models/user.rb
+index ea9760d..000cfe5 100644
+--- a/app/models/user.rb
++++ b/app/models/user.rb
+@@ -12,6 +12,10 @@ class User < ApplicationRecord
+   has_many :projects, through: :assignments
+   has_many :time_logs, dependent: :destroy
+ 
++  has_one :attachment, as: :attachable, dependent: :destroy
++
++  accepts_nested_attributes_for :attachment
++
+   def active_for_authentication?
+     super and self.active?
+   end
+@@ -32,7 +36,7 @@ class User < ApplicationRecord
+     self.active? ? "Inactivate" : "Activate"
+   end
+ 
+-   def get_toggled_role
++  def get_toggled_role
+     self.user? ? "Promote" : "Demote"
+   end
+ end
+diff --git a/app/views/devise/registrations/edit.html.erb b/app/views/devise/registrations/edit.html.erb
+index e1ca1af..f85cf8d 100644
+--- a/app/views/devise/registrations/edit.html.erb
++++ b/app/views/devise/registrations/edit.html.erb
+@@ -1,6 +1,6 @@
+ <h2>Edit <%= resource_name.to_s.humanize %></h2>
+ 
+-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
++<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { multipart: true,method: :put }) do |f| %>
+   <%= devise_error_messages! %>
+   <div class="form-group">
+     <%= f.label :first_name %>
+@@ -44,6 +44,11 @@
+     <%= f.password_field :current_password, autocomplete: "off", class: "form-control" %>
+   </div>
+ 
++  <div class="form-group">
++    <h2>Add Profile Picture</h2>
++    <%= f.file_field :file %>
++  </div>
++
+   <div class="actions">
+     <%= f.submit "Update", class: "btn btn-primary" %>
+   </div>
+diff --git a/db/schema.rb b/db/schema.rb
+index e633327..f0f4041 100644
+--- a/db/schema.rb
++++ b/db/schema.rb
+@@ -10,7 +10,7 @@
+ #
+ # It's strongly recommended that you check this file into your version control system.
+ 
+-ActiveRecord::Schema.define(version: 20180818080730) do
++ActiveRecord::Schema.define(version: 20180827052034) do
+ 
+   create_table "assignments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+     t.integer "user_id"
+@@ -19,6 +19,18 @@ ActiveRecord::Schema.define(version: 20180818080730) do
+     t.datetime "updated_at", null: false
+   end
+ 
++  create_table "attachments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
++    t.string "file_file_name"
++    t.string "file_content_type"
++    t.bigint "file_file_size"
++    t.datetime "file_updated_at"
++    t.string "attachable_type"
++    t.bigint "attachable_id"
++    t.datetime "created_at", null: false
++    t.datetime "updated_at", null: false
++    t.index ["attachable_type", "attachable_id"], name: "index_attachments_on_attachable_type_and_attachable_id"
++  end
++
+   create_table "clients", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+     t.string "first_name"
+     t.string "last_name"
+@@ -28,6 +40,16 @@ ActiveRecord::Schema.define(version: 20180818080730) do
+     t.datetime "updated_at", null: false
+   end
+ 
++  create_table "comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
++    t.bigint "user_id"
++    t.bigint "project_id"
++    t.string "body", null: false
++    t.datetime "created_at", null: false
++    t.datetime "updated_at", null: false
++    t.index ["project_id"], name: "index_comments_on_project_id"
++    t.index ["user_id"], name: "index_comments_on_user_id"
++  end
++
+   create_table "payments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+     t.integer "amount"
+     t.date "date"
+@@ -79,6 +101,8 @@ ActiveRecord::Schema.define(version: 20180818080730) do
+     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+   end
+ 
++  add_foreign_key "comments", "projects"
++  add_foreign_key "comments", "users"
+   add_foreign_key "time_logs", "projects"
+   add_foreign_key "time_logs", "users"
+ end

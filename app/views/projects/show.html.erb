@@ -1,4 +1,4 @@
-<h1><%= Project %></h1>
+<h1><% Project %></h1>
 <table class="table">
   <tbody>
     <tr>
@@ -36,10 +36,31 @@
 <% end %>
 
 <% if current_user.user? %>
-  <%= render 'time_logs/timelogs', timelogs: @project.time_logs.order_desc.first(5) %>
+  <%= render 'time_logs/timelogs', timelogs: @timelogs %>
   <%= link_to 'View All', project_time_logs_path(@project), class: "btn btn-info btn-md" %>
 <% else %>
-  <%= render 'payments/payments', payments: @project.payments.order_desc.first(5) %>
+  <%= render 'payments/payments', payments: @payments %>
   <%= link_to 'View All', project_payments_path(@project), class: "btn btn-info btn-md" %>
 <% end %>
+
+<%= link_to "Comments", "#", class: "toggle-link" %>
+<div class="ajax-form">
+  <%= render 'comments/comments', comments: @comments %>
+
+  <div class="form">
+    <%= form_for [@project, @project.comments.new], remote: true do |form| %>
+
+      <div class="form-group">
+        <%= form.label :body %>
+        <%= form.text_field :body, class: "form-control", id: "comment-body" %>
+      </div>
+
+      <div class="actions">
+        <%= form.submit class: "btn-btn primary" %>
+      </div>
+    <% end %>
+  </div>
+  <%= link_to 'View All', project_comments_path(@project), class: "btn btn-info btn-md" %>
+</div>
+
 <%= render 'layouts/modal' %>

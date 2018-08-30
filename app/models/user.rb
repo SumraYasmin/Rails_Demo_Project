@@ -11,6 +11,7 @@ class User < ApplicationRecord
   has_many :assignments, dependent: :destroy
   has_many :projects, through: :assignments
   has_many :time_logs, dependent: :destroy
+  has_many :comments, dependent: :destroy
 
   has_one :attachment, as: :attachable, dependent: :destroy
 

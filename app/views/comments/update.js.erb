@@ -1,0 +1,3 @@
+$("#comment-<%= @comment.id %>").replaceWith("<%= j render 'comments/table_row', comment: @comment %>");
+$('#dialog').modal('toggle');
+$(".flash-messages").html("<%= j render('layouts/alerts') %>");
