@@ -18,11 +18,11 @@ class ProjectsController < ApplicationController
 
   def new
     @project = Project.new
-    get_users_clients
+    select_options
   end
 
   def edit
-    get_users_clients
+    select_options
   end
 
   def create
@@ -31,6 +31,7 @@ class ProjectsController < ApplicationController
     if @project.save
       redirect_to @project, notice: 'Project was successfully created.'
     else
+      select_options
       render :new
     end
   end
@@ -39,6 +40,7 @@ class ProjectsController < ApplicationController
     if @project.update(project_params)
       redirect_to @project, notice: 'Project was successfully updated.'
     else
+      select_options
       render :edit
     end
   end
@@ -66,7 +68,7 @@ class ProjectsController < ApplicationController
       redirect_to(clients_path, notice: 'You can not perform this action.') unless current_user.admin?
     end
 
-    def get_users_clients
+    def select_options
       @clients = Client.all
       @users = User.all
     end
