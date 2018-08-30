@@ -32,3 +32,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'devise'
 gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
+gem 'jquery-rails'
+gem 'select2-rails'
+gem 'momentjs-rails'
+gem 'bootstrap3-datetimepicker-rails'

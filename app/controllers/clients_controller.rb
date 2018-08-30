@@ -1,7 +1,7 @@
 class ClientsController < ApplicationController
-  before_action :set_client, only: [:show, :edit, :update, :destroy]
   before_action :validates_role, only: [:new, :edit, :update, :create]
   before_action :validates_admin, only: :destroy
+  before_action :set_client, only: [:show, :edit, :update, :destroy]
 
   def index
     @clients = Client.all

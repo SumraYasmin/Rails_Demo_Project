@@ -1,0 +1,25 @@
+ <h1>Payments</h1>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Amount</th>
+          <th>Date</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="payment_items_table_tbody">
+        <% payments.each do |payment| %>
+          <tr id="payment-<%= payment.id %>">
+            <td><%= payment.amount %></td>
+            <td><%= payment.date %></td>
+            <td>
+              <%= link_to(edit_project_payment_path(@project, payment), remote: true, class: "btn btn-info btn-md"){icon_of('glyphicon-edit')} if current_user.manager? %>
+              <%= link_to(project_payment_path(@project, payment), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-md"){icon_of('glyphicon-trash')} if current_user.admin? %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<%= render 'layouts/modal' %>

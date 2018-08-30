@@ -1,8 +1,12 @@
 Rails.application.routes.draw do
-  resources :projects
   resources :clients
   devise_for :users
   root "pages#home"
+
+  resources :projects do
+    resources :payments, except: [:show]
+    resources :time_logs, except: [:show]
+  end
 
   namespace :admin do
     resources :users, only: [:destroy, :index, :edit, :update] do

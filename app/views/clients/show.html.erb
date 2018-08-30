@@ -1,22 +1,47 @@
-<p>
-  <strong>First name:</strong>
-  <%= @client.first_name %>
-</p>
+<h1><%Client %></h1>
+<table class="table-responsive">
+  <tbody>
+    <tr>
+      <td><strong>Name:</strong></td>
+      <td><%= @client.name %></td>
+    </tr>
+    <tr>
+      <td><strong>Email:</strong></td>
+      <td><%= @client.email %></td>
+    </tr>
+    <tr>
+      <td><strong>Address:</strong></td>
+      <td><%= @client.location %></td>
+    </tr>
+  </tbody>
+</table>
 
-<p>
-  <strong>Last name:</strong>
-  <%= @client.last_name %>
-</p>
+<%= link_to 'Edit', edit_client_path(@client), class: "btn btn-primary btn-md" unless current_user.user? %>
+<%= link_to 'Back', clients_path, class: "btn btn-info btn-md" %>
 
-<p>
-  <strong>Email:</strong>
-  <%= @client.email %>
-</p>
+<h1>Projects</h1>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Start Date</th>
+        <th>Status</th>
+        <th>Cost</th>
+      </tr>
+    </thead>
 
-<p>
-  <strong>Location:</strong>
-  <%= @client.location %>
-</p>
-
-<%= link_to 'Edit', edit_client_path(@client) unless current_user.user? %>
-<%= link_to 'Back', clients_path %>
+    <tbody>
+      <% @client.projects.each do |project| %>
+        <tr>
+          <td><%= project.title.humanize %></td>
+          <td><%= project.description %></td>
+          <td><%= project.start_date %></td>
+          <td><%= project.status.humanize %></td>
+          <td><%= project.cost %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

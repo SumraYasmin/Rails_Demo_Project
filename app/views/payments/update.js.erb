@@ -1,0 +1,3 @@
+$("#payment-<%= @payment.id %>").replaceWith("<%= j render 'payments/table_row', payment: @payment %>");
+$('#dialog').modal('toggle');
+$(".flash-messages").html("<%= j render('layouts/alerts') %>");
