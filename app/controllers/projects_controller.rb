@@ -12,13 +12,17 @@ class ProjectsController < ApplicationController
   end
 
   def show
+    @timelogs = @project.time_logs.order_desc.first(5)
+    @payments = @project.payments.order_desc.first(5)
   end
 
   def new
     @project = Project.new
+    get_users_clients
   end
 
   def edit
+    get_users_clients
   end
 
   def create
@@ -60,5 +64,10 @@ class ProjectsController < ApplicationController
 
     def validates_admin
       redirect_to(clients_path, notice: 'You can not perform this action.') unless current_user.admin?
+    end
+
+    def get_users_clients
+      @clients = Client.all
+      @users = User.all
     end
 end
