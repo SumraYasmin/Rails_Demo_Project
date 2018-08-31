@@ -35,7 +35,7 @@ class TimeLogsController < ApplicationController
 
   def destroy
     @timelog.destroy
-    redirect_to :back, notice: 'Timelog was successfully destroyed.'
+    redirect_to @timelog.project, notice: 'Timelog was successfully destroyed.'
   end
 
   private

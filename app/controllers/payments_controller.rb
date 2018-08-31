@@ -35,7 +35,7 @@ class PaymentsController < ApplicationController
 
   def destroy
     @payment.destroy
-    redirect_to :back, notice: 'Payment was successfully destroyed.'
+    redirect_to @payment.project, notice: 'Payment was successfully destroyed.'
   end
 
   private
