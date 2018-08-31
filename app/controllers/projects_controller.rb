@@ -6,8 +6,10 @@ class ProjectsController < ApplicationController
   def index
     if current_user.user?
       @projects = current_user.projects.order_desc.includes(:client)
+      @projects = @projects.search(params[:term])
     else
       @projects = Project.order_desc.includes(:client)
+      @projects = @projects.search(params[:term])
     end
   end
 
@@ -57,7 +59,7 @@ class ProjectsController < ApplicationController
     end
 
     def project_params
-      params.require(:project).permit(:title, :description, :status, :client_id, :start_date, :cost, user_ids: [], attachments_attributes: [:file, :id, :_destory])
+      params.require(:project).permit(:title, :description, :status, :client_id, :start_date, :cost, :term, user_ids: [], attachments_attributes: [:file, :id, :_destory])
     end
 
     def validate_role

@@ -13,4 +13,12 @@ class Project < ApplicationRecord
   def self.status_map
     statuses.map {|key, value| [key.humanize, key]}
   end
+
+  def self.search(term)
+    if term
+     where('title LIKE ?', "%#{term}%")
+    else
+      all
+    end
+  end
 end
