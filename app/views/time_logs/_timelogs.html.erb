@@ -3,7 +3,7 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>Amount</th>
+          <th>Hours</th>
           <th>Date</th>
           <th>Action</th>
         </tr>
@@ -11,8 +11,8 @@
       <tbody id="timelog_items_table_tbody">
         <% timelogs.each do |timelog| %>
           <tr id="timelog-<%= timelog.id %>">
-            <td><%= timelog.date %></td>
             <td><%= timelog.hours %></td>
+            <td><%= timelog.date %></td>
             <td>
               <%= link_to(edit_project_time_log_path(@project, timelog), remote: true, class: "btn btn-info btn-md"){icon_of('glyphicon-edit')} %>
               <%= link_to(project_time_log_path(@project, timelog), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-md"){icon_of('glyphicon-trash')} %>

@@ -28,13 +28,14 @@ class PaymentsController < ApplicationController
     if @payment.update(payment_params)
       flash.now[:notice] = 'Payment was successfully updated.'
     else
+      set_project
       render :edit
     end
   end
 
   def destroy
     @payment.destroy
-    redirect_to :back, notice: 'Payment was successfully destroyed.'
+    redirect_to @payment.project, notice: 'Payment was successfully destroyed.'
   end
 
   private

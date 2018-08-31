@@ -1,6 +1,6 @@
 $(document).ready(function(){
   $(".datepicker").datetimepicker({
-    format: 'DD/MM/YYYY'
+    format: "DD/MM/YYYY"
   });
 });
 $(document).on("turbolinks:load", function(){

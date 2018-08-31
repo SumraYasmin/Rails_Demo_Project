@@ -28,13 +28,14 @@ class TimeLogsController < ApplicationController
     if @timelog.update(timelog_params)
       flash.now[:notice] = 'Timelog was successfully updated.'
     else
+      set_project
       render :edit
     end
   end
 
   def destroy
     @timelog.destroy
-    redirect_to :back, notice: 'Timelog was successfully destroyed.'
+    redirect_to @timelog.project, notice: 'Timelog was successfully destroyed.'
   end
 
   private
