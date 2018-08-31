@@ -28,6 +28,7 @@ class PaymentsController < ApplicationController
     if @payment.update(payment_params)
       flash.now[:notice] = 'Payment was successfully updated.'
     else
+      set_project
       render :edit
     end
   end

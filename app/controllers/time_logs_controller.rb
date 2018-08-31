@@ -28,6 +28,7 @@ class TimeLogsController < ApplicationController
     if @timelog.update(timelog_params)
       flash.now[:notice] = 'Timelog was successfully updated.'
     else
+      set_project
       render :edit
     end
   end
