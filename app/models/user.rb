@@ -1,5 +1,9 @@
 class User < ApplicationRecord
   scope :except_admins, -> { where.not(role: :admin) }
+
+ sphinx_scope(:except_adminx){
+   where.not(role: :admin)}
+
   validates :first_name, :last_name, presence: true
     
   devise :database_authenticatable, :registerable,
