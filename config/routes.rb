@@ -1,11 +1,20 @@
 Rails.application.routes.draw do
-  resources :clients
-  devise_for :users
   root "pages#home"
+  devise_for :users
+  
+  namespace :api do
+    namespace :v1 do
+      post :auth, to: "authentication#create"
+      resources :projects
+      resources :clients
+    end
+  end
+  
+  resources :clients
 
   resources :projects do
-    resources :payments, except: [:show]
-    resources :time_logs, except: [:show]
+  resources :payments, except: [:show]
+  resources :time_logs, except: [:show]
   end
 
   namespace :admin do
