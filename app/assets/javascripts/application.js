@@ -5,4 +5,6 @@
 //= require select2
 //= require moment
 //= require bootstrap-datetimepicker
+//= require highcharts
+//= require chartkick
 //= require_tree .

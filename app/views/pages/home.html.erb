@@ -1,2 +1,13 @@
 <h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<h2>Top 5 Projects</h2>
+<%= render "home_table", projects: @top_projects %>
+<h2>Bottom 5 Projects</h2>
+<%= render "home_table", projects: @bottom_projects %>
+<%= line_chart @monthly_timelogs,
+  title: 'Monthly Time_logs For Current Projects',
+    colors: ['green']
+%>
+<%= line_chart @monthly_payments,
+  title: 'Monthly Payments For Current Projects',
+    colors: ['green']
+%>
