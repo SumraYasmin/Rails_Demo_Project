@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
   before_action :set_project, only: [:new, :edit, :create, :index, :destroy]
-  before_action :set_comment, only: [:show, :edit, :update, :destroy]
+  before_action :set_comment, only: [:edit, :update, :destroy]
 
   def index
     @comments = @project.comments

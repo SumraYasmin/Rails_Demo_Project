@@ -49,11 +49,11 @@ class PaymentsController < ApplicationController
     end
 
     def validate_role
-      redirect_to(clients_path, notice: 'You can not perform this action.') if current_user.user?
+      redirect_to(projects_path, notice: 'You can not perform this action.') if current_user.user?
     end
 
     def validates_admin
-      redirect_to(clients_path, notice: 'You can not perform this action.') unless current_user.admin?
+      redirect_to(projects_path, notice: 'You can not perform this action.') unless current_user.admin?
     end
 
     def set_project

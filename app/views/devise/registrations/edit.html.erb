@@ -6,8 +6,8 @@
   <div class="align-middle">
     <h2>Profile Picture</h2>
     <%= image_tag (current_user.attachment.file.url(:thumb)), class: "img-rounded" if current_user.attachment.present? %>
-    <%= f.fields_for :attachment, current_user.attachment || current_user.build_attachment do |attachment| %>
-      <%= attachment.file_field :file, class: "btn"%>
+    <%= f.fields_for :attachment, user_attachment(current_user) do |attachment| %>
+      <%= attachment.file_field :file, class: "btn" %>
     <% end %>
   </div>
 

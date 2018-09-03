@@ -31,25 +31,24 @@
 <%= link_to 'Edit', edit_project_path(@project), class: "btn btn-primary btn-md" unless current_user.user? %>
 <%= link_to 'Back', projects_path, class: "btn btn-info btn-md" %>
 
-<% if @project.attachments.any? %>
+<% unless @project.attachments.blank? %>
   <%= render 'attachments/attachments', attachments: @project.attachments %>
 <% end %>
 
 <% if current_user.user? %>
-  <%= render 'time_logs/timelogs', timelogs: @timelogs %>
+  <%= render 'time_logs/timelogs', timelogs: @recent_timelogs %>
   <%= link_to 'View All', project_time_logs_path(@project), class: "btn btn-info btn-md" %>
 <% else %>
-  <%= render 'payments/payments', payments: @payments %>
+  <%= render 'payments/payments', payments: @recent_payments %>
   <%= link_to 'View All', project_payments_path(@project), class: "btn btn-info btn-md" %>
 <% end %>
 
 <%= link_to "Comments", "#", class: "toggle-link" %>
 <div class="ajax-form">
-  <%= render 'comments/comments', comments: @comments %>
+  <%= render 'comments/comments', comments: @recent_comments %>
 
   <div class="form">
     <%= form_for [@project, @project.comments.new], remote: true do |form| %>
-
       <div class="form-group">
         <%= form.label :body %>
         <%= form.text_field :body, class: "form-control", id: "comment-body" %>

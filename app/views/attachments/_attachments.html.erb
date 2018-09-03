@@ -1,13 +1,13 @@
 <h1>Files</h1>
-  <div class="table-responsive">
-    <table class="table table-striped">
-      <tbody>
-        <% attachments.each do |attachment| %>
-          <tr>
-            <td><%= link_to attachment.file_file_name, attachment.file.url, download: "" %></td>
-            <td><%= attachment.file_updated_at %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <tbody>
+      <% attachments.each do |attachment| %>
+        <tr>
+          <td><%= link_to attachment.file_file_name, attachment.file.url, download: "" %></td>
+          <td><%= attachment.file_updated_at %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

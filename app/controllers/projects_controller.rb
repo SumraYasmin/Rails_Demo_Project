@@ -12,9 +12,9 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    @comments = @project.comments.first(5)
-    @payments = @project.payments.order_desc.first(5)
-    @timelogs = @project.time_logs.order_desc.first(5)
+    @recent_comments = @project.comments.last(5)
+    @recent_payments = @project.payments.order_desc.first(5)
+    @recent_timelogs = @project.time_logs.order_desc.first(5)
   end
 
   def new

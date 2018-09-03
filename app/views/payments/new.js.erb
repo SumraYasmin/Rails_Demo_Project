@@ -1,8 +1,6 @@
 $('#dialog h3').html("<i class='glyphicon glyphicon-plus'></i> Add New Payment");
 $('.modal-body').html('<%= j render("form") %>');
-$(".datepicker").datetimepicker({
-  format: 'DD/MM/YYYY'
-});
+datepickerfunction();
 $('#dialog').modal("show");
 $('#dialog').on('shown.bs.modal', function(){
   $('.first_input').focus()
