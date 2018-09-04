@@ -1,3 +1,8 @@
+<%= form_tag(projects_path, method: :get) do %>
+  <%= text_field_tag :search %>
+  <%= submit_tag 'Search' %>
+<% end %>
+
 <h1>Projects</h1>
 <div class="table-responsive">
   <table class="table table-striped">

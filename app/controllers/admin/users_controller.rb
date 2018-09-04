@@ -3,6 +3,9 @@ class Admin::UsersController < AdminController
 
   def index
     @users = User.except_admins
+    if params[:search]
+      @users = User.search(params[:search])
+    end
   end
 
   def destroy
