@@ -13,4 +13,11 @@ class Project < ApplicationRecord
   def self.status_map
     statuses.map {|key, value| [key.humanize, key]}
   end
+
+  def self.projects_earning
+    joins(:time_logs)
+    .group(:project_id)
+    .order("earning_per_hour desc")
+    .pluck("projects.title, sum(time_logs.hours) as total_hours, (projects.cost/(sum(time_logs.hours))) as earning_per_hour")
+  end
 end

@@ -1,4 +1,4 @@
-class Admin::UsersController < AdminController
+class Admin::UsersController < Admin::AdminController
   before_action :validates_role, only: [:update_status, :update_role, :destroy]
 
   def index

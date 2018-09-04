@@ -1,4 +1,4 @@
-class PaymentsController < ApplicationController
+class Api::V1::PaymentsController < ApplicationController
   before_action :validate_role, only: [:new, :edit, :update, :create]
   before_action :set_project, only: [:create, :new, :edit, :index]
   before_action :validates_admin, only: :destroy

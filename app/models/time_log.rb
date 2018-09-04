@@ -4,4 +4,10 @@ class TimeLog < ApplicationRecord
 
   belongs_to :project
   belongs_to :user
+
+  def self.get_monthly_timelogs
+    where('time_logs.date >= ? AND time_logs.date <= ?', Time.zone.now.beginning_of_month, Time.zone.now.end_of_month)
+    .joins(:project)
+    .group('projects.title').sum(:hours)
+  end
 end
