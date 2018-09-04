@@ -11,6 +11,11 @@ class User < ApplicationRecord
   has_many :assignments, dependent: :destroy
   has_many :projects, through: :assignments
   has_many :time_logs, dependent: :destroy
+  has_many :comments, dependent: :destroy
+
+  has_one :attachment, as: :attachable, dependent: :destroy
+
+  accepts_nested_attributes_for :attachment, reject_if: lambda { |a| a[:file].blank? }
 
   def active_for_authentication?
     super and self.active?
@@ -32,7 +37,7 @@ class User < ApplicationRecord
     self.active? ? "Inactivate" : "Activate"
   end
 
-   def get_toggled_role
+  def get_toggled_role
     self.user? ? "Promote" : "Demote"
   end
 end

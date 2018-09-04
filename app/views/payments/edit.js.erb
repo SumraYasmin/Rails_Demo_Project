@@ -3,6 +3,7 @@ $(".datepicker").datetimepicker({
   format: "DD/MM/YYYY"
 });
 $('.modal-body').html('<%= j render("form") %>');
+bind_date_picker()
 $('#dialog').modal("show");
 $('#dialog').on('shown.bs.modal', function(){
   $('.first_input').focus()

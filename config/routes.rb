@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   root "pages#home"
 
   resources :projects do
+    resources :comments, except: [:show]
     resources :payments, except: [:show]
     resources :time_logs, except: [:show]
   end

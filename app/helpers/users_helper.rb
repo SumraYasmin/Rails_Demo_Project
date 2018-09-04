@@ -18,4 +18,8 @@ module UsersHelper
 
     user.active? ? klasses : (klasses << ' disabled')
   end
+
+  def user_attachment(user)
+    user.attachment || user.build_attachment
+  end
 end

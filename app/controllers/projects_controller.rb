@@ -12,8 +12,9 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    @timelogs = @project.time_logs.order_desc.first(5)
-    @payments = @project.payments.order_desc.first(5)
+    @recent_comments = @project.comments.last(5)
+    @recent_payments = @project.payments.order_desc.first(5)
+    @recent_timelogs = @project.time_logs.order_desc.first(5)
   end
 
   def new
@@ -23,6 +24,7 @@ class ProjectsController < ApplicationController
 
   def edit
     select_options
+    @project.attachments.build
   end
 
   def create
@@ -57,15 +59,15 @@ class ProjectsController < ApplicationController
     end
 
     def project_params
-      params.require(:project).permit(:title, :description, :status, :client_id, :start_date, :cost, user_ids: [], attachments_attributes: [:file, :id, :_destory])
+      params.require(:project).permit(:title, :description, :status, :client_id, :start_date, :cost, user_ids: [], attachments_attributes: [:file, :id, :_destroy])
     end
 
     def validate_role
-      redirect_to(clients_path, notice: 'You can not perform this action.') if current_user.user?
+      redirect_to(projects_path, notice: 'You can not perform this action.') if current_user.user?
     end
 
     def validates_admin
-      redirect_to(clients_path, notice: 'You can not perform this action.') unless current_user.admin?
+      redirect_to(projects_path, notice: 'You can not perform this action.') unless current_user.admin?
     end
 
     def select_options

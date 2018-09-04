@@ -1,0 +1,8 @@
+<tr>
+  <td><%= comment.user.user_name %></td>
+  <td><%= comment.created_at %></td>
+  <td><%= comment.body %></td>
+  <td><%= link_to(edit_project_comment_path(comment.project, comment), remote: true, class: "btn btn-info btn-md"){icon_of('glyphicon-edit')} %>
+    <%= link_to(project_comment_path(comment.project, comment), method: :delete, remote: true, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-md"){icon_of('glyphicon-trash')} %>
+  </td>
+</tr>

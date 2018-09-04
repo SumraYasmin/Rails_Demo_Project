@@ -5,4 +5,5 @@
 //= require select2
 //= require moment
 //= require bootstrap-datetimepicker
+//= require cocoon
 //= require_tree .

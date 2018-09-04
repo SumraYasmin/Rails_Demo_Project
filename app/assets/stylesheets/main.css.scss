@@ -1,28 +1,27 @@
 .navbar {
   min-height: 150px;
-  font-size: 16px;
-  color: #FFFFFF;
+  color: white;
 }
 
 .navbar-inverse {
   min-height: 100px;
-  font-size: 16px;
-  color: #FFFFFF;
+  font-size: 17px;
 }
 
 .navbar-right {
   margin-top: 10px;
   margin-right: 70px;
- }
+}
 
-.navbar-brand {
+.navbar-inverse .navbar-brand {
   padding-top: 40px;
+  color: white;
 }
 
 header {
   padding-top: 10px;
 }
 
-body {
-  font-size: 16px;
+.ajax-form {
+  display : none;
 }

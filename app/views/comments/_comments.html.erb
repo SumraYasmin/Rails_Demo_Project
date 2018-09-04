@@ -1,0 +1,28 @@
+  <h1>Comments</h1>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>User</th>
+          <th>Date</th>
+          <th>Comment</th>
+        </tr>
+      </thead>
+      <tbody id="comment-tbody">
+        <% comments.each do |comment| %>
+          <tr id="comment-<%= comment.id %>">
+            <td><%= comment.user.user_name %></td>
+            <td><%= comment.created_at %></td>
+            <td><%= comment.body %></td>
+            <td>
+              <% if comment.user.id == current_user.id %>
+                <%= link_to(edit_project_comment_path(@project, comment), remote: true, class: "btn btn-info btn-md"){icon_of('glyphicon-edit')} %>
+                <%= link_to(project_comment_path(@project, comment), method: :delete, remote: true, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-md"){icon_of('glyphicon-trash')} %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<%= render 'layouts/modal' %>
