@@ -1,6 +1,6 @@
 $('#dialog h3').html("<i class='glyphicon glyphicon-plus'></i> Add New Timelog");
 $('.modal-body').html('<%= j render("form") %>');
-datepickerfunction();
+bind_date_picker()
 $('#dialog').modal("show");
 $('#dialog').on('shown.bs.modal', function(){
   $('.first_input').focus()
