@@ -3,9 +3,9 @@ class Api::V1::ProjectsController < Api::V1::ApiController
 
   def index
     if current_user.user?
-      @projects = current_user.projects.order_desc
+      @projects = current_user.projects.order_desc.includes(:time_logs)
     else
-      @projects = Project.order_desc
+      @projects = Project.order_desc.includes(:time_logs)
     end
     render json: @projects
   end
