@@ -2,10 +2,7 @@ class Admin::UsersController < Admin::AdminController
   before_action :validates_role, only: [:update_status, :update_role, :destroy]
 
   def index
-    @users = User.except_admins
-    if params[:search]
-      @users = User.search(params[:search])
-    end
+    @users = User.search(params[:search], without: {role: 1})
   end
 
   def destroy

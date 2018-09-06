@@ -5,9 +5,9 @@ class ProjectsController < ApplicationController
 
   def index
     if current_user.user?
-      @projects = params[:search] ? current_user.projects.search(params[:search]) : current_user.projects
+      @projects = Project.search(params[:search], with: {user_id: current_user.id})
     else
-      @projects = params[:search] ? Project.search(params[:search]) : Project.order_desc
+      @projects = Project.search(params[:search])
     end
   end
 

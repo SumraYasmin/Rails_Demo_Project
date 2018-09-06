@@ -1,13 +1,7 @@
 class Api::V1::ApiController < ActionController::API
-  before_action :set_default_format
   before_action :authenticate_token!
 
-   private
-
-     def set_default_format
-      request.format = :json
-    end
-
+  private
     def authenticate_token!
       payload = JsonWebToken.decode(auth_token)
       @current_user = User.find(payload["sub"])
@@ -17,7 +11,7 @@ class Api::V1::ApiController < ActionController::API
         render json: {errors: ["Invalid auth token"]}, status: :unauthorized
     end
 
-     def auth_token
+    def auth_token
       @auth_token ||= request.headers.fetch("Authorization", "").split(" ").last
     end
 end
