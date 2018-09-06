@@ -41,3 +41,4 @@ gem 'active_model_serializers', '~> 0.10.4'
 gem 'jwt'
 gem 'pg', group: :production
 gem 'rails_12factor'
+gem 'kaminari'

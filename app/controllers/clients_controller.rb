@@ -4,7 +4,7 @@ class ClientsController < ApplicationController
   before_action :set_client, only: [:show, :edit, :update, :destroy]
 
   def index
-    @clients = params[:search] ? (Client.search ThinkingSphinx::Query.escape(params[:search])) : Client.search(params[:search])
+    @clients = params[:search] ? (Client.search ThinkingSphinx::Query.escape(params[:search]), page: params[:page], per_page: 5) : Client.search(params[:search], page: params[:page], per_page: 5)
   end
 
   def show
