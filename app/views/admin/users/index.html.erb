@@ -1,7 +1,6 @@
 <%= paginate @users %>
 <%= form_tag(admin_users_path, method: :get) do %>
-  <%= text_field_tag :search %>
-  <%= submit_tag 'Search' %>
+  <%= text_field_tag :search, nil, placeholder: "search", class: "search" %>
 <% end %>
 
 <h2>Users</h2>

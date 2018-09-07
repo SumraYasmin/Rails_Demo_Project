@@ -1,10 +1,8 @@
 class ClientsController < ApplicationController
-  before_action :validates_role, only: [:new, :edit, :update, :create]
-  before_action :validates_admin, only: :destroy
   before_action :set_client, only: [:show, :edit, :update, :destroy]
 
   def index
-    @clients = params[:search] ? (Client.search ThinkingSphinx::Query.escape(params[:search]), page: params[:page], per_page: 5) : Client.search(params[:search], page: params[:page], per_page: 5)
+    @clients = Client.search ThinkingSphinx::Query.escape(params[:search].to_s), page: params[:page], per_page: 5
   end
 
   def show
@@ -12,13 +10,16 @@ class ClientsController < ApplicationController
 
   def new
     @client = Client.new
+    authorize @client, :allowed?
   end
 
   def edit
+    authorize @client, :allowed?
   end
 
   def create
     @client = Client.new(client_params)
+    authorize @client, :allowed?
 
     if @client.save
       redirect_to @client, notice: 'Client was successfully created.'
@@ -28,6 +29,7 @@ class ClientsController < ApplicationController
   end
 
   def update
+    authorize @client, :allowed?
     if @client.update(client_params)
       redirect_to @client, notice: 'Client was successfully updated.'
     else
@@ -36,6 +38,7 @@ class ClientsController < ApplicationController
   end
 
   def destroy
+    authorize @client
     @client.destroy
     redirect_to clients_path, notice: 'Client was successfully destroyed.'
   end
@@ -48,13 +51,5 @@ class ClientsController < ApplicationController
 
     def client_params
       params.require(:client).permit(:first_name, :last_name, :email, :location)
-    end
-
-    def validates_role
-      redirect_to(clients_path, notice: 'You can not perform this action.') if current_user.user?
-    end
-
-    def validates_admin
-      redirect_to(clients_path, notice: 'You can not perform this action.') unless current_user.admin?
     end
 end

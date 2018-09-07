@@ -42,3 +42,4 @@ gem 'jwt'
 gem 'pg', group: :production
 gem 'rails_12factor'
 gem 'kaminari'
+gem "pundit"

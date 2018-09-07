@@ -1,7 +1,6 @@
 <%= paginate @clients %>
 <%= form_tag(clients_path, method: :get) do %>
-  <%= text_field_tag :search %>
-  <%= submit_tag 'Search' %>
+  <%= text_field_tag :search, nil, placeholder: "search", class: "search" %>
 <% end %>
 
 <h1>Clients</h1>
