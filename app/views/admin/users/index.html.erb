@@ -1,7 +1,4 @@
-<%= paginate @users %>
-<%= form_tag(admin_users_path, method: :get) do %>
-  <%= text_field_tag :search, nil, placeholder: "search", class: "search" %>
-<% end %>
+<%= render "shared/search_form", path: admin_users_path, page_collection: @users %>
 
 <h2>Users</h2>
 <div class="table-responsive">

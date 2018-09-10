@@ -5,7 +5,7 @@ class PagesController < ApplicationController
     @projects = Project.projects_earning
     @top_projects = @projects.first(5)
     @bottom_projects = @projects.last(5)
-    @monthly_timelogs = TimeLog.get_monthly_timelogs
-    @monthly_payments = Payment.get_monthly_payments
+    @monthly_timelogs = TimeLog.get_cur_month_timelogs
+    @monthly_payments = Payment.get_cur_month_payments
   end
 end

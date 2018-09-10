@@ -1,6 +1,6 @@
 class ClientPolicy < ApplicationPolicy
   def destroy?
-    user.admin? ? true : false
+    user.admin?
   end
 
   def allowed?

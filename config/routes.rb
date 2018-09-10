@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   root "pages#home"
   devise_for :users
-  
+  resources :clients
+
   namespace :api do
     constraints format: :json do
       namespace :v1 do
@@ -10,12 +11,10 @@ Rails.application.routes.draw do
       end
     end
   end
-  
-  resources :clients
 
   resources :projects do
-  resources :payments, except: [:show]
-  resources :time_logs, except: [:show]
+    resources :payments, except: [:show]
+    resources :time_logs, except: [:show]
   end
 
   namespace :admin do

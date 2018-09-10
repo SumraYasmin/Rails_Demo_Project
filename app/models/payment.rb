@@ -4,7 +4,7 @@ class Payment < ApplicationRecord
 
   belongs_to :project
 
-  def self.get_monthly_payments
+  def self.get_cur_month_payments
     where('payments.date >= ? AND payments.date <= ?', Time.zone.now.beginning_of_month, Time.zone.now.end_of_month)
     .joins(:project)
     .group('projects.title').sum(:amount)
